@@ -63,6 +63,6 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/project-management-be:latest
           docker ps -a -q | xargs -r docker stop
           docker ps -a -q | xargs -r docker rm
-          docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/project-management-be:latest
+          docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/project-management-be:latest
           EONG
           EOF
