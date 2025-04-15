@@ -56,7 +56,10 @@ jobs:
           echo "${{ secrets.SSH_KEY }}" > ec2-key.pem
           chmod 400 ec2-key.pem
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          docker pull your-dockerhub-username/your-docker-image-name:latest
-          docker stop $(docker ps -a -q) || true
-          docker run -d -p 80:80 your-dockerhub-username/your-docker-image-name:latest
+          sudo service docker start
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          docker pull ${{ secrets.DOCKER_USERNAME }}/project-management-be:latest
+          docker ps -a -q | xargs -r docker stop
+          docker ps -a -q | xargs -r docker rm
+          docker run -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/project-management-be:latest
           EOF
