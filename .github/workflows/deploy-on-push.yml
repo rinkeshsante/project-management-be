@@ -34,7 +34,7 @@ jobs:
       - name: Build with Maven
         run: |
           chmod +x ./mvnw
-          ./mvnw clean package -DskipTests
+          ./mvnw clean install
 
       # Step 5: Log in to Docker Hub using Access Token
       - name: Log in to Docker Hub
